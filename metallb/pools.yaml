@@ -1,0 +1,31 @@
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: internal
+  namespace: metallb-system
+spec:
+  addresses:
+  - 10.0.0.0/24
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: public
+  namespace: metallb-system
+spec:
+  addresses:
+  - 91.99.10.215-91.99.10.215
+  serviceAllocation:
+    priority: 1
+    namespaces:
+      - ingress-nginx
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: advertisements
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - internal
+  - public
