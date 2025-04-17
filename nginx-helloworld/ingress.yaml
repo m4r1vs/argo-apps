@@ -6,6 +6,10 @@ metadata:
     cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+      - nginx.falkenberg.kubenix.niveri.dev
+      secretName: nginx-example-tls
   rules:
   - host: nginx.falkenberg.kubenix.niveri.dev
     http:
