@@ -1,0 +1,58 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prometheus-stack
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://prometheus-community.github.io/helm-charts
+    targetRevision: "69.8.2"
+    chart: kube-prometheus-stack
+    helm:
+      valuesObject:
+        # alertmanager:
+        #   ingress:
+        #     enabled: false
+        #     ingressClassName: nginx
+        #     annotations:
+        #     labels:
+        #     hosts:
+        #       - alerts.kubenix.niveri.dev
+        #     paths:
+        #       - /
+        #     tls:
+        #       - secretName: alertmanager-general-tls
+        #         hosts:
+        #           - alerts.kubenix.niveri.dev
+        crds:
+          enabled: true
+          upgradeJob:
+            enabled: true
+        grafana:
+          ingress:
+            enabled: true
+            ingressClassName: nginx
+            annotations:
+              cert-manager.io/cluster-issuer: letsencrypt-prod
+              # nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+              # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+            labels:
+            hosts:
+              - grafana.kubenix.niveri.dev
+            paths:
+              - /
+            tls:
+              - secretName: grafana-general-tls
+                hosts:
+                  - grafana.kubenix.niveri.dev
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
