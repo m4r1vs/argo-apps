@@ -19,7 +19,7 @@ spec:
             annotations:
               kubernetes.io/tls-acme: true
           hosts:
-            domain: kubenix.niveri.dev
+            domain: test.kubenix.niveri.dev
             externalIP:
             gitlab:
               name: gitlab.kubenix.niveri.dev
