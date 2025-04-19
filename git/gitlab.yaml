@@ -1,0 +1,85 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: gitlab
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: http://charts.gitlab.io/
+    targetRevision: "8.11.0"
+    chart: gitlab
+    helm:
+      valuesObject:
+        upgradeCheck:
+          enabled: false
+        global:
+          ingress:
+            configureCertmanager: false
+            annotations:
+              kubernetes.io/tls-acme: true
+          hosts:
+            domain: kubenix.niveri.dev
+            externalIP:
+            gitlab:
+              name: gitlab.kubenix.niveri.dev
+            registry:
+              name: registry.kubenix.niveri.dev
+            minio:
+              name: minio.kubenix.niveri.dev
+            smartcard:
+              name: smartcard.kubenix.niveri.dev
+            kas:
+              name: kas.kubenix.niveri.dev
+            pages:
+              name: pages.kubenix.niveri.dev
+            ssh: gitlab.kubenix.niveri.dev
+        certmanager:
+          install: false
+        prometheus:
+          install: false
+        gitlab:
+          gitaly:
+            persistence:
+              storageClass: rook-cephfs-retain
+              size: 50Gi
+          webservice:
+            ingress:
+              tls:
+                secretName: RELEASE-gitlab-tls
+          kas:
+            ingress:
+              tls:
+                secretName: RELEASE-kas-tls
+        registry:
+          webservice:
+            ingress:
+              tls:
+                secretName: RELEASE-registry-tls
+        redis:
+          master:
+            persistence:
+              storageClass: rook-cephfs-retain
+              size: 5Gi
+        postgresql:
+          persistence:
+            storageClass: rook-cephfs-retain
+            size: 8Gi
+        minio:
+          webservice:
+            ingress:
+              tls:
+                secretName: RELEASE-minio-tls
+          persistence:
+            storageClass: rook-cephfs-retain
+            size: 10Gi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: gitlab
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
