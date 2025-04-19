@@ -556,7 +556,7 @@ data:
   # Disable automatic orchestration when new devices are discovered
   ROOK_DISABLE_DEVICE_HOTPLUG: "false"
   # The duration between discovering devices in the rook-discover daemonset.
-  ROOK_DISCOVER_DEVICES_INTERVAL: "60m"
+  ROOK_DISCOVER_DEVICES_INTERVAL: "1m"
   # DISCOVER_DAEMON_RESOURCES: |
   #   - name: DISCOVER_DAEMON_RESOURCES
   #     resources:
