@@ -1,0 +1,89 @@
+# --- Registry Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-registry-bucket
+  namespace: default
+spec:
+  generateBucketName: gitlab-registry
+  storageClassName: rook-ceph-object
+---
+# --- LFS Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-lfs-storage-bucket
+  namespace: default
+spec:
+  generateBucketName: gitlab-lfs-storage
+  storageClassName: rook-ceph-object
+---
+# --- Artifacts Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-artifacts-storage-bucket
+  namespace: default
+spec:
+  generateBucketName: gitlab-artifacts-storage
+  storageClassName: rook-ceph-object
+---
+# --- Uploads Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-uploads-storage-bucket
+  namespace: default
+spec:
+  generateBucketName: gitlab-uploads-storage # Corresponds to global.appConfig.uploads.bucket
+  storageClassName: rook-ceph-object
+---
+# --- Packages Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-packages-storage-bucket # Kubernetes resource name
+  namespace: default
+spec:
+  generateBucketName: gitlab-packages-storage # Corresponds to global.appConfig.packages.bucket
+  storageClassName: rook-ceph-object
+---
+# --- External Diffs Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-externaldiffs-storage-bucket # Kubernetes resource name
+  namespace: default
+spec:
+  generateBucketName: gitlab-externaldiffs-storage # Corresponds to global.appConfig.externalDiffs.bucket
+  storageClassName: rook-ceph-object
+---
+# --- Terraform State Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-terraform-state-bucket # Kubernetes resource name
+  namespace: default
+spec:
+  generateBucketName: gitlab-terraform-state # Corresponds to global.appConfig.terraformState.bucket
+  storageClassName: rook-ceph-object
+---
+# --- Dependency Proxy Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-dependencyproxy-storage-bucket # Kubernetes resource name
+  namespace: default
+spec:
+  generateBucketName: gitlab-dependencyproxy-storage # Corresponds to global.appConfig.dependencyProxy.bucket
+  storageClassName: rook-ceph-object
+---
+# --- CI Secure Files Bucket ---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: gitlab-ci-secure-files-bucket # Kubernetes resource name
+  namespace: default
+spec:
+  generateBucketName: gitlab-ci-secure-files # Corresponds to global.appConfig.ciSecureFiles.bucket
+  storageClassName: rook-ceph-object
