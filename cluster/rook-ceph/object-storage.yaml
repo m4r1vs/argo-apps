@@ -19,6 +19,9 @@ spec:
     port: 80
     # securePort: 443
     instances: 1
+  # service:
+  #   annotations:
+  #     cert-manager.io/cluster-issuer: letsencrypt-prod
   healthCheck:
     # bucket:
     #   disabled: false
