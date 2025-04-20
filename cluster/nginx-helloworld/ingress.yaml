@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - hello-world.kubenix.niveri.dev
+      - hello-world.cluster.niveri.dev
       secretName: nginx-example-tls
   rules:
-  - host: hello-world.kubenix.niveri.dev
+  - host: hello-world.cluster.niveri.dev
     http:
       paths:
       - path: /

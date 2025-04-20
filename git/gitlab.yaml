@@ -19,21 +19,21 @@ spec:
             annotations:
               kubernetes.io/tls-acme: true
           hosts:
-            domain: test.kubenix.niveri.dev
+            domain: test.cluster.niveri.dev
             externalIP:
             gitlab:
-              name: gitlab.kubenix.niveri.dev
+              name: gitlab.cluster.niveri.dev
             registry:
-              name: registry.kubenix.niveri.dev
+              name: registry.cluster.niveri.dev
             minio:
-              name: minio.kubenix.niveri.dev
+              name: minio.cluster.niveri.dev
             smartcard:
-              name: smartcard.kubenix.niveri.dev
+              name: smartcard.cluster.niveri.dev
             kas:
-              name: kas.kubenix.niveri.dev
+              name: kas.cluster.niveri.dev
             pages:
-              name: pages.kubenix.niveri.dev
-            ssh: gitlab.kubenix.niveri.dev
+              name: pages.cluster.niveri.dev
+            ssh: gitlab.cluster.niveri.dev
         certmanager:
           install: false
         prometheus:

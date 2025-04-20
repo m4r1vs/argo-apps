@@ -18,13 +18,13 @@ spec:
         #     annotations:
         #     labels:
         #     hosts:
-        #       - alerts.kubenix.niveri.dev
+        #       - alerts.cluster.niveri.dev
         #     paths:
         #       - /
         #     tls:
         #       - secretName: alertmanager-general-tls
         #         hosts:
-        #           - alerts.kubenix.niveri.dev
+        #           - alerts.cluster.niveri.dev
         crds:
           enabled: true
           upgradeJob:
@@ -39,13 +39,13 @@ spec:
               # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
             labels:
             hosts:
-              - grafana.kubenix.niveri.dev
+              - grafana.cluster.niveri.dev
             paths:
               - /
             tls:
               - secretName: grafana-general-tls
                 hosts:
-                  - grafana.kubenix.niveri.dev
+                  - grafana.cluster.niveri.dev
   destination:
     server: https://kubernetes.default.svc
   syncPolicy:

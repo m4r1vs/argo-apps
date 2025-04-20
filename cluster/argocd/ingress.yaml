@@ -10,7 +10,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: argo.kubenix.niveri.dev
+  - host: argo.cluster.niveri.dev
     http:
       paths:
       - path: /
@@ -22,5 +22,5 @@ spec:
               name: https
   tls:
   - hosts:
-    - argo.kubenix.niveri.dev
+    - argo.cluster.niveri.dev
     secretName: argocd-server-tls

@@ -11,10 +11,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - rook.kubenix.niveri.dev
+      - rook.cluster.niveri.dev
       secretName: rook-ceph-tls
   rules:
-  - host: rook.kubenix.niveri.dev
+  - host: rook.cluster.niveri.dev
     http:
       paths:
       - path: /

@@ -4,7 +4,6 @@ metadata:
   name: cluster
   namespace: argocd
   annotations:
-    # argocd.argoproj.io/hook: PostSync
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   project: default
