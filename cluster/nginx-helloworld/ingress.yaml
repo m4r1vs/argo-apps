@@ -8,10 +8,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - tjark-stinkt.kubenix.niveri.dev
+      - hello-world.kubenix.niveri.dev
       secretName: nginx-example-tls
   rules:
-  - host: tjark-stinkt.kubenix.niveri.dev
+  - host: hello-world.kubenix.niveri.dev
     http:
       paths:
       - path: /
