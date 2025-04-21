@@ -69,6 +69,13 @@ spec:
             pages:
               name: pages.cluster.niveri.dev
             ssh: gitlab.cluster.niveri.dev
+        gitlab-runner:
+          runners:
+            config: |
+              [[runners]]
+                [runners.kubernetes]
+                helper_image = "registry.gitlab.com/gitlab-org/gitlab-runner/gitlab-runner-helper:arm64-latest"
+                image = "ubuntu:22.04"
         nginx-ingress:
           enabled: false
         certmanager:
