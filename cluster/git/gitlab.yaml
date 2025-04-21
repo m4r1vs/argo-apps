@@ -48,8 +48,8 @@ spec:
           minio:
             enabled: false
           ingress:
-            # enabled: false
             configureCertmanager: false
+            class: nginx
             annotations:
               kubernetes.io/tls-acme: true
               cert-manager.io/cluster-issuer: letsencrypt-prod
@@ -69,8 +69,8 @@ spec:
             pages:
               name: pages.cluster.niveri.dev
             ssh: gitlab.cluster.niveri.dev
-        nginx:
-          install: false
+        nginx-ingress:
+          enabled: false
         certmanager:
           install: false
         prometheus:

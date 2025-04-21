@@ -9,6 +9,10 @@ spec:
     repoURL: https://kubernetes.github.io/ingress-nginx
     targetRevision: "4.12.1"
     chart: ingress-nginx
+    helm:
+      valuesObject:
+        tcp:
+          22: "gitlab/gitlab-gitlab-shell:22"
   destination:
     server: https://kubernetes.default.svc
     namespace: ingress-nginx
