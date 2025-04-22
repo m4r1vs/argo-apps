@@ -26,7 +26,7 @@ spec:
                 secret: artifacts-connection
                 key: connection
             uploads:
-              bucket: gitlab-uploads-storage-8dbb23fc-0823-4b6a-9cb0-4df2603aa62
+              bucket: gitlab-uploads-storage-8dbb23fc-0823-4b6a-9cb0-4df2603aa621
               connection:
                 secret: uploads-connection
                 key: connection
