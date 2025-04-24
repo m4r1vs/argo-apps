@@ -101,6 +101,8 @@ spec:
           storage:
             secret: registry-connection
             key: connection
+            redirect:
+              disable: true
           webservice:
             ingress:
               tls:
