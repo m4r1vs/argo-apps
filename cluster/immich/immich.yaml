@@ -67,7 +67,7 @@ spec:
               tls:
                 - hosts:
                     - photos.cluster.niveri.dev
-                  secretName: immich-tls
+                  secretName: immich-server-tls
   destination:
     server: https://kubernetes.default.svc
     namespace: immich

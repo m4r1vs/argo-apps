@@ -23,6 +23,7 @@ metadata:
   annotations:
     storageclass.kubernetes.io/is-default-class: "true"
 provisioner: rook-ceph.cephfs.csi.ceph.com
+allowVolumeExpansion: true
 parameters:
   clusterID: rook-ceph
   fsName: sharedfs
@@ -41,6 +42,7 @@ kind: StorageClass
 metadata:
   name: rook-cephfs-retain
 provisioner: rook-ceph.cephfs.csi.ceph.com
+allowVolumeExpansion: true
 parameters:
   clusterID: rook-ceph
   fsName: sharedfs
