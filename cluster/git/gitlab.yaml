@@ -33,7 +33,7 @@ spec:
             packages:
               bucket: gitlab-packages-storage-72badaa6-dc1c-4c3b-8684-23547a23c99b
               connection:
-                secret: packages-connection
+                secret: package-connection
                 key: connection
             terraformState:
               bucket: gitlab-terraform-state-1bd99987-caeb-4f72-b55b-59b48554bf0d
