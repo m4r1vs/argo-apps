@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: petrinetregistry
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://gitlab.cluster.niveri.dev/api/v4/projects/3/packages/helm/stable
+    targetRevision: ">=0.0.0"
+    chart: petrinetregistry
+    helm:
+      valuesObject:
+        image:
+          repository: registry.cluster.niveri.dev/marius/petrinetz-registry
+          tag: latest
+        ingress:
+          issuer:
+            scope: cluster
+            name: letsencrypt-prod
+          hosts:
+            - pnetregis.cluster.niveri.dev
+          ingressClassName: nginx
+          tls:
+            secretName: pnetregis-tls
+            hosts:
+                - pnetregis.cluster.niveri.dev
+        persistence:
+          storageClass: rook-cephfs-retain
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: petrinetregistry
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      allowEmpty: true
+      selfHeal: true
