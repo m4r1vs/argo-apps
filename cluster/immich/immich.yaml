@@ -14,7 +14,7 @@ spec:
         env:
           DB_DATABASE_NAME: immich
           DB_HOSTNAME: immich-pg-cluster-rw.postgres
-          DB_PASSWORD: RfU6GE1JAlQaLz5JMRTSoobiSvtfx3c7i0pznzzu4tHYyKHHQNh6SFPC9zQwgGc7
+          DB_PASSWORD: 7xaHS7M7TAecxCEmpCJamIl9Ps6M5bqDQTHrOz7TKiFn0xN7bgNmcWWYnKbz9Nmk
           DB_USERNAME: immich
           REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
         immich:
