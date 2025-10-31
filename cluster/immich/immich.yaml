@@ -7,67 +7,98 @@ spec:
   project: default
   source:
     repoURL: https://immich-app.github.io/immich-charts
-    targetRevision: "0.9.2"
+    targetRevision: "0.10.1"
     chart: immich
     helm:
       valuesObject:
-        env:
-          DB_DATABASE_NAME: immich
-          DB_HOSTNAME: immich-pg-cluster-rw.postgres
-          DB_PASSWORD: 7xaHS7M7TAecxCEmpCJamIl9Ps6M5bqDQTHrOz7TKiFn0xN7bgNmcWWYnKbz9Nmk
-          DB_USERNAME: immich
-          REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
         immich:
           persistence:
             library:
               existingClaim: immich-pvc
         machine-learning:
-          controller:
-            replicas: 2
-            strategy: RollingUpdate
+          controllers:
+            main:
+              containers:
+                main:
+                  image:
+                    repository: ghcr.io/immich-app/immich-machine-learning
+                    pullPolicy: IfNotPresent
+                    tag: v2
+                  env:
+                    TRANSFORMERS_CACHE: /cache
+                    HF_XET_CACHE: /cache/huggingface-xet
+                    MPLCONFIGDIR: /cache/matplotlib-config
           enabled: true
-          env:
-            TRANSFORMERS_CACHE: /cache
-          image:
-            pullPolicy: IfNotPresent
-            repository: ghcr.io/immich-app/immich-machine-learning
-            tag: v1.132.3
           persistence:
             cache:
               accessMode: ReadWriteMany
               enabled: true
               size: 10Gi
               storageClass: rook-cephfs
-              type: pvc
-        redis:
-          architecture: standalone
-          auth:
-            enabled: false
+              type: persistentVolumeClaim
+        valkey:
           enabled: true
+          controllers:
+            main:
+              containers:
+                main:
+                  image:
+                    repository: docker.io/valkey/valkey
+                    tag: 9.0-alpine@sha256:73f3aa08d95879525aa0dc84ebf6b82b59b898a24e8067a37d6250c31ee2c4d4
+                    pullPolicy: IfNotPresent
+          persistence:
+            data:
+              enabled: true
+              size: 1Gi
+              # Optional: Set this to persistentVolumeClaim to keep job queues persistent
+              type: persistentVolumeClaim
+              accessMode: ReadWriteOnce
         server:
-          controller:
-            replicas: 2
-            strategy: RollingUpdate
           enabled: true
-          image:
-            pullPolicy: IfNotPresent
-            repository: ghcr.io/immich-app/immich-server
-            tag: v1.132.3
+          controllers:
+            main:
+              containers:
+                main:
+                  image:
+                    repository: ghcr.io/immich-app/immich-server
+                    pullPolicy: IfNotPresent
+                    tag: v2
+                  env:
+                    DB_HOSTNAME:
+                      valueFrom:
+                        secretKeyRef:
+                          name: immich-pg-cluster-app
+                          key: host
+                    DB_USERNAME:
+                      valueFrom:
+                        secretKeyRef:
+                          name: immich-pg-cluster-app
+                          key: user
+                    DB_PASSWORD:
+                      valueFrom:
+                        secretKeyRef:
+                          name: immich-pg-cluster-app
+                          key: password
+                    DB_DATABASE_NAME:
+                      valueFrom:
+                        secretKeyRef:
+                          name: immich-pg-cluster-app
+                          key: dbname
           ingress:
             main:
               annotations:
                 cert-manager.io/cluster-issuer: letsencrypt-prod
-                nginx.ingress.kubernetes.io/proxy-body-size: '0'
+                nginx.ingress.kubernetes.io/proxy-body-size: "0"
               enabled: true
               hosts:
-                - host: photos.cluster.niveri.dev
+                - host: immich.cluster.niveri.dev
                   paths:
                     - path: /
               ingressClassName: nginx
               tls:
                 - hosts:
-                    - photos.cluster.niveri.dev
-                  secretName: immich-server-tls
+                    - immich.cluster.niveri.dev
+                  secretName: immich-server-tls-new
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
