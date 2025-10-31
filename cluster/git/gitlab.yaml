@@ -16,32 +16,32 @@ spec:
         global:
           appConfig:
             lfs:
-              bucket: gitlab-lfs-storage-d50c7cfa-06b5-4076-97fa-a550fb875a54
+              bucket: gitlab-lfs-storage-0094b7b5-f33b-42ae-a6e1-cd2796b2a37e
               connection:
                 secret: lfs-connection
                 key: connection
             artifacts:
-              bucket: gitlab-artifacts-storage-db636e77-4f66-412e-a939-aba5702f4926
+              bucket: gitlab-artifacts-storage-b706611c-b90f-4154-b2f9-774ed5dc3f35
               connection:
                 secret: artifacts-connection
                 key: connection
             uploads:
-              bucket: gitlab-uploads-storage-8dbb23fc-0823-4b6a-9cb0-4df2603aa621
+              bucket: gitlab-uploads-storage-fa6097fc-b6bc-49b2-8e61-6c67b246a422
               connection:
                 secret: uploads-connection
                 key: connection
             packages:
-              bucket: gitlab-packages-storage-72badaa6-dc1c-4c3b-8684-23547a23c99b
+              bucket: gitlab-packages-storage-8ae765ca-5add-4120-aa3e-062cd398891e
               connection:
                 secret: package-connection
                 key: connection
             terraformState:
-              bucket: gitlab-terraform-state-1bd99987-caeb-4f72-b55b-59b48554bf0d
+              bucket: gitlab-terraform-state-7b7c3d36-13bf-4435-888d-dc3dd9e84561
               connection:
                 secret: terraform-state-connection
                 key: connection
             ciSecureFiles:
-              bucket: gitlab-ci-secure-files-5c99b43d-29e4-4460-bbd6-d660493ff69b
+              bucket: gitlab-ci-secure-files-884fa565-3bc1-4f00-82af-18e0bc84d9af
               connection:
                 secret: ci-secure-files-connection
                 key: connection
