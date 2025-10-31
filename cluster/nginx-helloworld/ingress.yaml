@@ -8,16 +8,16 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - hello-world.cluster.niveri.dev
+        - hello-kube.cluster.niveri.dev
       secretName: nginx-example-tls
   rules:
-  - host: hello-world.cluster.niveri.dev
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-        backend:
-          service:
-            name: nginx-hello-world
-            port:
-              number: 80
+    - host: hello-kube.cluster.niveri.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-hello-world
+                port:
+                  number: 80
