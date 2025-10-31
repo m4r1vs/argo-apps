@@ -7,10 +7,11 @@ spec:
   project: default
   source:
     repoURL: https://kubernetes.github.io/ingress-nginx
-    targetRevision: "4.12.1"
+    targetRevision: "4.13.3"
     chart: ingress-nginx
     helm:
       valuesObject:
+        controller.ingressClassResource.default: true
         tcp:
           22: "gitlab/gitlab-gitlab-shell:22"
   destination:
