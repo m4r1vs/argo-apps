@@ -91,14 +91,14 @@ spec:
                 nginx.ingress.kubernetes.io/proxy-body-size: "0"
               enabled: true
               hosts:
-                - host: immich.cluster.niveri.dev
+                - host: gallery.cluster.niveri.dev
                   paths:
                     - path: /
               ingressClassName: nginx
               tls:
                 - hosts:
-                    - immich.cluster.niveri.dev
-                  secretName: immich-server-tls-new
+                    - gallery.cluster.niveri.dev
+                  secretName: immich-server-tls-new-new
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
