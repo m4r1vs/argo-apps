@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: http://charts.gitlab.io/
-    targetRevision: "8.11.0"
+    targetRevision: ">=0.0.0"
     chart: gitlab
     helm:
       valuesObject:
@@ -78,8 +78,7 @@ spec:
                 image = "ubuntu:22.04"
         nginx-ingress:
           enabled: false
-        certmanager:
-          install: false
+        installCertmanager: false
         prometheus:
           install: false
         gitlab:
