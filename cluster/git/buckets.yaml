@@ -3,71 +3,251 @@ apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-registry-bucket
-  namespace: default
+  namespace: gitlab
 spec:
   generateBucketName: gitlab-registry
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-registry-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-registry-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-registry-storage-bucket
+    - configMapRef:
+        name: gitlab-registry-storage-bucket
 ---
 # --- LFS Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-lfs-storage-bucket
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-lfs-storage-0094b7b5-f33b-42ae-a6e1-cd2796b2a37e
   generateBucketName: gitlab-lfs-storage
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-lfs-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-lfs-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-lfs-storage-bucket
+    - configMapRef:
+        name: gitlab-lfs-storage-bucket
 ---
 # --- Artifacts Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-artifacts-storage-bucket
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-artifacts-storage-b706611c-b90f-4154-b2f9-774ed5dc3f35
   generateBucketName: gitlab-artifacts-storage
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-artifacts-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-artifacts-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-artifacts-storage-bucket
+    - configMapRef:
+        name: gitlab-artifacts-storage-bucket
 ---
 # --- Uploads Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-uploads-storage-bucket
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-uploads-storage-fa6097fc-b6bc-49b2-8e61-6c67b246a422
   generateBucketName: gitlab-uploads-storage # Corresponds to global.appConfig.uploads.bucket
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-uploads-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-uploads-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-uploads-storage-bucket
+    - configMapRef:
+        name: gitlab-uploads-storage-bucket
 ---
 # --- Packages Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-packages-storage-bucket # Kubernetes resource name
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-packages-storage-8ae765ca-5add-4120-aa3e-062cd398891e
   generateBucketName: gitlab-packages-storage # Corresponds to global.appConfig.packages.bucket
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-packages-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-packages-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-packages-storage-bucket
+    - configMapRef:
+        name: gitlab-packages-storage-bucket
 ---
 # --- External Diffs Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-externaldiffs-storage-bucket # Kubernetes resource name
-  namespace: default
+  namespace: gitlab
 spec:
   generateBucketName: gitlab-externaldiffs-storage # Corresponds to global.appConfig.externalDiffs.bucket
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-externaldiffs-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-externaldiffs-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRef:
+        name: gitlab-externaldiffs-storage-bucket
+    - configMapRef:
+        name: gitlab-externaldiffs-storage-bucket
 ---
 # --- Terraform State Bucket ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-terraform-state-bucket # Kubernetes resource name
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-terraform-state-7b7c3d36-13bf-4435-888d-dc3dd9e84561
   generateBucketName: gitlab-terraform-state # Corresponds to global.appConfig.terraformState.bucket
@@ -78,7 +258,7 @@ apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-dependencyproxy-storage-bucket # Kubernetes resource name
-  namespace: default
+  namespace: gitlab
 spec:
   generateBucketName: gitlab-dependencyproxy-storage # Corresponds to global.appConfig.dependencyProxy.bucket
   storageClassName: rook-ceph-object
@@ -88,8 +268,38 @@ apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
   name: gitlab-ci-secure-files-bucket # Kubernetes resource name
-  namespace: default
+  namespace: gitlab
 spec:
   bucketName: gitlab-ci-secure-files-884fa565-3bc1-4f00-82af-18e0bc84d9af
   generateBucketName: gitlab-ci-secure-files # Corresponds to global.appConfig.ciSecureFiles.bucket
   storageClassName: rook-ceph-object
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gitlab-ci-secure-files-s3-creds
+  namespace: gitlab
+spec:
+  refreshInterval: "1h"
+  secretStoreRef:
+    name: gitlab-obc-store
+    kind: SecretStore
+  target:
+    name: gitlab-ci-secure-files-s3-creds
+    creationPolicy: Owner
+    template:
+      type: Opaque
+      data:
+        connection: |
+          provider: AWS
+          aws_access_key_id: {{ .AWS_ACCESS_KEY_ID | b64dec }}
+          aws_secret_access_key: {{ .AWS_SECRET_ACCESS_KEY | b64dec }}
+          host: {{ .BUCKET_HOST }}
+          port: {{ .BUCKET_PORT }}
+          region: {{ .BUCKET_REGION | default "us-east-1" }}
+          path_style: true
+  dataFrom:
+    - secretRefRef:
+        name: gitlab-ci-secure-files-storage-bucket
+    - configMapRef:
+        name: gitlab-ci-secure-files-storage-bucket

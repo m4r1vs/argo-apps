@@ -15,35 +15,38 @@ spec:
           enabled: false
         global:
           appConfig:
+            object_store:
+              enabled: true
+              connection: {}
             lfs:
               bucket: gitlab-lfs-storage-0094b7b5-f33b-42ae-a6e1-cd2796b2a37e
               connection:
-                secret: lfs-connection
+                secret: gitlab-lfs-s3-creds
                 key: connection
             artifacts:
               bucket: gitlab-artifacts-storage-b706611c-b90f-4154-b2f9-774ed5dc3f35
               connection:
-                secret: artifacts-connection
+                secret: gitlab-artifacts-s3-creds
                 key: connection
             uploads:
               bucket: gitlab-uploads-storage-fa6097fc-b6bc-49b2-8e61-6c67b246a422
               connection:
-                secret: uploads-connection
+                secret: gitlab-uploads-s3-creds
                 key: connection
             packages:
               bucket: gitlab-packages-storage-8ae765ca-5add-4120-aa3e-062cd398891e
               connection:
-                secret: package-connection
+                secret: gitlab-packages-s3-creds
                 key: connection
             terraformState:
               bucket: gitlab-terraform-state-7b7c3d36-13bf-4435-888d-dc3dd9e84561
               connection:
-                secret: terraform-state-connection
+                secret: gitlab-registry-s3-creds
                 key: connection
             ciSecureFiles:
               bucket: gitlab-ci-secure-files-884fa565-3bc1-4f00-82af-18e0bc84d9af
               connection:
-                secret: ci-secure-files-connection
+                secret: gitlab-ci-secure-files-s3-creds
                 key: connection
           minio:
             enabled: false
@@ -98,7 +101,7 @@ spec:
                 secretName: kas-tls
         registry:
           storage:
-            secret: registry-connection
+            secret: gitlab-registry-s3-creds
             key: connection
             redirect:
               disable: true
