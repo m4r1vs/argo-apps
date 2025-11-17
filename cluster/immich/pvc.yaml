@@ -5,8 +5,8 @@ metadata:
   namespace: immich
 spec:
   accessModes:
-  - ReadWriteMany
+    - ReadWriteMany
   resources:
     requests:
-      storage: 100Gi
+      storage: 200Gi
   storageClassName: rook-cephfs-retain
