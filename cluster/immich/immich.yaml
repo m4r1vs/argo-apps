@@ -18,6 +18,7 @@ spec:
         machine-learning:
           controllers:
             main:
+              replicas: 3
               containers:
                 main:
                   image:
@@ -57,6 +58,7 @@ spec:
           enabled: true
           controllers:
             main:
+              replicas: 3
               containers:
                 main:
                   image:
@@ -91,14 +93,14 @@ spec:
                 nginx.ingress.kubernetes.io/proxy-body-size: "0"
               enabled: true
               hosts:
-                - host: gallery.cluster.niveri.dev
+                - host: photos.cluster.niveri.dev
                   paths:
                     - path: /
-              ingressClassName: nginx
+              className: nginx
               tls:
                 - hosts:
-                    - gallery.cluster.niveri.dev
-                  secretName: immich-server-tls-new-new
+                    - photos.cluster.niveri.dev
+                  secretName: immich-server-tls-test
   destination:
     server: https://kubernetes.default.svc
     namespace: immich
