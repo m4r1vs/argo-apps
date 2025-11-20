@@ -11,7 +11,7 @@ spec:
     chart: terratracker-chart
     helm:
       valuesObject:
-        frontendServer:
+        server:
           enabled: true
           controllers:
             main:
