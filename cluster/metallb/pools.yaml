@@ -21,11 +21,47 @@ spec:
       - ingress-nginx
 ---
 apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: public-envoy
+  namespace: metallb-system
+spec:
+  addresses:
+  - 91.107.238.152-91.107.238.152
+  serviceAllocation:
+    priority: 1
+    namespaces:
+      - envoy-gateway-system
+---
+apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:
-  name: advertisements
+  name: internal-adv
   namespace: metallb-system
 spec:
   ipAddressPools:
-  - internal
-  - public
+    - internal
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: public-adv
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - public
+  nodeSelectors:
+    - matchLabels:
+        kubernetes.io/hostname: falkenberg.kubenix.niveri.dev
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: public-envoy-adv
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+    - public-envoy
+  nodeSelectors:
+    - matchLabels:
+        kubernetes.io/hostname: stadeln.kubenix.niveri.dev
